@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements AddCityFragment.A
 
 
     public void onUpdateCity(City updatedCity) {
-        cityAdapter.remove(updatedCity);
+        dataList.set(dataList.indexOf(updatedCity), updatedCity);
         cityAdapter.notifyDataSetChanged();
     }
 
@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity implements AddCityFragment.A
         FloatingActionButton fab = findViewById(R.id.button_add_city);
         fab.setOnClickListener(v -> {
             new AddCityFragment().show(getSupportFragmentManager(), "Add city");
+        });
+
+        cityList.setOnItemClickListener((parent, view, position, id) -> {
+            City city = cityAdapter.getItem(position);
+            EditCityFragment fragment = EditCityFragment.newInstance(city);
+            fragment.show(getSupportFragmentManager(), "Edit city");
         });
     }
 }

@@ -23,6 +23,7 @@ public class EditCityFragment extends DialogFragment {
     public static EditCityFragment newInstance(@Nullable City city) {
         EditCityFragment f = new EditCityFragment();
         Bundle args = new Bundle();
+        args.putSerializable(ARG_CITY, city);
         f.setArguments(args);
         return f;
     }
@@ -53,7 +54,13 @@ public class EditCityFragment extends DialogFragment {
         EditText editProvinceName = view.findViewById(R.id.edit_text_province_text);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
+        if (city != null) {
+            editCityName.setText(city.getName());
+            editProvinceName.setText(city.getProvince());
+        }
+
         return builder
+                .setView(view)
                 .setTitle("Edit City")
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton( "Save", (dialog, which) -> {
